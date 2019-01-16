@@ -1,25 +1,15 @@
 // from data.js
 var tableData = data;
-// create array to hold data from JSON file
-var datetime  = [];
-var city = [];
-var state = [];
-var country = [];
-var shape = []
-var durationMinutes = []
-var comments = []
 
-// Use D3 to select the table
-var table = d3.select("table");
+NewTable(tableData);
 
-// Use d3 to create a bootstrap striped table
-// 
-table.attr("class", "table table-striped");
+function NewTable(date){
 
-var tbody = d3.select("tbody");
-
+    var tbody = d3.select("tbody");
+// refreshing the previous data
+tbody.html("");
 //iterate through JSON
-tableData.forEach((sighting) => {
+date.forEach((sighting) => {
     var row = tbody.append("tr");
     //iterate through key value pairs
     Object.entries(sighting).forEach(([key, value]) => {
@@ -27,20 +17,21 @@ tableData.forEach((sighting) => {
         cell.text(value)
 
         
-          })
+          });
 
-    })
+    });
+}
 
-
-
-//select body
-
-
-// Append one table row `tr` to the table body
-
-
-// Append one cell for the date
-
-
-
+var button = d3.select("#filter-btn");
+    
+button.on("click",function(){
+d3.event.preventDefault();
+// taking the datetime position
+var datetime = d3.select("#datetime");
+// taking the property attribute
+var FilterDate = datetime.property("value");
+var filteredTable = tableData.filter(tableData => tableData.datetime === FilterDate);
+console.log(filteredTable);
+NewTable(filteredTable);
+});
 
